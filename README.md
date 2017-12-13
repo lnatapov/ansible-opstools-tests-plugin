@@ -1,0 +1,1 @@
+# ansible-opstools-tests-plugin
