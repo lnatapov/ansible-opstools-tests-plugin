@@ -1,5 +1,3 @@
-# Ansible NFV playbooks
-Ansible NFV repository holds various playbooks for installation, configuration, tuning, testing and day to day tasks related to NFV and Openstack.
 
 ## Documentation
 For the repository documentation, refer to the **docs** directory, which provide explanation regarding the playbooks.  
@@ -10,35 +8,9 @@ The playbook will generate an inventory file for the tripleo environment.
 
 ## Playbooks
 * TripleO
-    * NFV (DEPRECATED)
-      * DPDK
-      * SRIOV
-    * Tester
-      * Tempest
-      * Testpmd deploy and MoonGen run
-      * Testpmd deploy and MoonGen run on secondary NUMA node
-    * Tuning
-      * CPU pinning and Huge pages
-      * Tuned
     * Post install
       * Openstack tasks
-      * Overcloud repo install
-      * TripleO Inventory
-* Moongen
-    * Moongen install
-    * Moongen run
-* Packstack
-    * NFV
-      * DPDK
-      * SRIOV
-    * Tester
-      * Tempest
-      * Testpmd install
-    * Tuning
-      * CPU pinning and Huge pages
-      * Tuned
-    * Post install
-      * Openstack tasks
+      * Fluentd taks
 
 ## How to contribue
 Patches should be submitted using git review to the GerritHub.
