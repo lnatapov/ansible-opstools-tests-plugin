@@ -1,0 +1,26 @@
+---
+# Note! - The task splitted into two different tasks because
+#         in case one of the flavors provided without extra specs,
+#         it will be ignored and not created.
+
+- name: copy shell script that executes elasticsearch query
+  copy:
+    src: query.sh
+    dest: /tmp/query.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: execute elasticsearch query  script
+  shell: "/bin/bash /tmp/query.sh &"
+
+- name: Check whether flavor creation log exist
+  command: grep  test1 /tmp/output.txt
+  register: checkmyconf
+  check_mode: no
+  ignore_errors: yes
+  changed_when: no
+
+- name: Check whether the flavor test1 was created and log recieved in Kibana.
+  debug: msg="Flavor test1 was created and log recieved in Kibana"
+  when: checkmyconf.rc == 0
