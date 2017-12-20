@@ -6,7 +6,7 @@
   os_networks_facts:
     cloud: overcloud
     filters:
-      router:external: true
+      router:external: false
   register: external_network_id
 
 - name: Get internal Network ID
@@ -15,7 +15,7 @@
   os_networks_facts:
     cloud: overcloud
     filters:
-      router:external: false
+      router:external: true
   register: internal_network_id
 
 - name: Create keypair
@@ -50,7 +50,7 @@
     - { protocol: icmp, port_range_min: -1, port_range_max: -1 }
     - { protocol: tcp, port_range_min: 22, port_range_max: 22 }
 
-- name: Create a new instance
+- name: Create a new instance.
   vars:
     ansible_python_interpreter: "/tmp/ansible_venv/bin/python"
   os_server:
@@ -63,11 +63,12 @@
     security_groups: nfv-test
     nics:
       - net-id: "{{ external_network_id.ansible_facts.openstack_networks.0.id }}"
-      - net-id: "{{ internal_network_id.ansible_facts.openstack_networks.0.id }}"
-      - net-id: "{{ internal_network_id.ansible_facts.openstack_networks.1.id }}"
+    #  - net-id: "{{ internal_network_id.ansible_facts.openstack_networks.0.id }}"
+    #  - net-id: "{{ internal_network_id.ansible_facts.openstack_networks.1.id }}"
   with_items:
     - "{{ instances }}"
   register: instance_id
+  ignore_errors: yes
 
 - name: Copy private key from generated keypair
   copy:
@@ -79,26 +80,26 @@
   delegate_to: localhost
   become: false
 
-- name: Add host to dynamic inventory
-  add_host:
-    name: "{{ item.item.name }}"
-    group: "{{ group_name }}"
-    ansible_ssh_host: "{{ item.openstack.addresses.external[0].addr }}"
-    ansible_ssh_user: cloud-user
-    ansible_ssh_port: 22
-    ansible_ssh_private_key_file: "/tmp/private_key"
-  with_items:
-    - "{{ instance_id.results }}"
+#- name: Add host to dynamic inventory
+#  add_host:
+#    name: "{{ item.item.name }}"
+#    group: "{{ group_name }}"
+#    ansible_ssh_host: "{{ item.openstack.addresses.external[0].addr }}"
+#    ansible_ssh_user: cloud-user
+#    ansible_ssh_port: 22
+#    ansible_ssh_private_key_file: "/tmp/private_key"
+#  with_items:
+#    - "{{ instance_id.results }}"
 
-- name: Wait for the instance to boot up
-  wait_for:
-    host: "{{ item.openstack.addresses.external[0].addr }}"
-    search_regex: "OpenSSH"
-    port: 22
-    timeout: 300
-    connect_timeout: 50
-    delay: 5
-  delegate_to: localhost
-  become: false
-  with_items:
-    - "{{ instance_id.results }}"
+#- name: Wait for the instance to boot up
+#  wait_for:
+#    host: "{{ item.openstack.addresses.external[0].addr }}"
+#    search_regex: "OpenSSH"
+#    port: 22
+#    timeout: 300
+#    connect_timeout: 50
+#    delay: 5
+#  delegate_to: localhost
+#  become: false
+#  with_items:
+#    - "{{ instance_id.results }}"
