@@ -1,7 +1,7 @@
 ---
 # Note! - The task splitted into two different tasks because
 #         in case one of the flavors provided without extra specs,
-#         it will be ignored and not created.
+#         it will be ignored and not created
 
 - name: copy shell script that executes elasticsearch query for flavor
   copy:
