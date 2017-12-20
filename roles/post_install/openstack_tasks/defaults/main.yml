@@ -6,7 +6,7 @@ create_networks: true
 create_flavors: true
 images_upload: true
 overcloud_delete: false
-boot_instance: false
+boot_instance: true
 clear_env: false
 
 ### Networks
