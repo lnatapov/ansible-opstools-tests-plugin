@@ -23,14 +23,14 @@
   shell: "/bin/bash /tmp/query_flavor.sh &"
 
 - name: Check whether flavor creation log exist
-  command: grep  test1 /tmp/output.txt
+  command: grep  test1 /tmp/output_flavor_query.txt
   register: checkmyconf
   check_mode: no
   ignore_errors: yes
   changed_when: no
 
 - name: Check whether flavor test1 was created and log recieved in Kibana.
-  debug: msg="Flavor test1 was created and log recieved in Kibana"
+  debug: msg="FLAVOR TEST1 WAS CREATED AND LOG SUCCESSFULLY RECIEVED IN KIBANA"
   when: checkmyconf.rc == 0
 
 
@@ -38,12 +38,12 @@
   shell: "/bin/bash /tmp/query_instance.sh &"
 
 - name: Check whether instance creation log exist
-  command: grep  vm1 /tmp/output.txt
+  command: grep  vm1 /tmp/output_instance_query.txt
   register: checkmyconf
   check_mode: no
   ignore_errors: yes
   changed_when: no
 
 - name: Check whether instance vm1 was created and log recieved in Kibana.
-  debug: msg="Instance vm1 was created and log recieved in Kibana"
+  debug: msg="INSTANCE VM1 WAS CREATED AND LOG SUCCESSFULLY RECIEVED IN KIBANA"
   when: checkmyconf.rc == 0
