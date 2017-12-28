@@ -16,3 +16,12 @@
   become: True
   become_method: sudo
   become_user: root
+
+
+- name: Sensu tasks
+  hosts: undercloud-0
+  roles:
+    - post_install/sensu_query
+  become: True
+  become_method: sudo
+  become_user: root
